@@ -179,6 +179,10 @@ namespace QuickNotes3
 
             //save to file
             File.WriteAllText(path, Doc.Text);
+            //set docPath
+            docPath = path;
+            //set doc name display
+            DocPath.Text = path.Substring(path.LastIndexOf('\\') + 1);
 
             //Reload doc
             Reload();
