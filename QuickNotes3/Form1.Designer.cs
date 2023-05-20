@@ -80,17 +80,17 @@
             this.LoadButton.TabStop = false;
             this.LoadButton.Text = "Load";
             this.LoadButton.UseVisualStyleBackColor = false;
+            this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
             // 
             // DocPath
             // 
-            this.DocPath.AutoSize = true;
+            this.DocPath.AutoEllipsis = true;
             this.DocPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DocPath.ForeColor = System.Drawing.Color.White;
             this.DocPath.Location = new System.Drawing.Point(0, 3);
             this.DocPath.Name = "DocPath";
-            this.DocPath.Size = new System.Drawing.Size(38, 16);
+            this.DocPath.Size = new System.Drawing.Size(223, 16);
             this.DocPath.TabIndex = 3;
-            this.DocPath.Text = "Path";
             // 
             // Form
             // 
@@ -106,7 +106,6 @@
             this.Text = "QuickNotes3";
             this.Load += new System.EventHandler(this.Form_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

@@ -13,9 +13,12 @@ namespace QuickNotes3
 {
     public partial class Form : System.Windows.Forms.Form
     {
+        //Doc text colors
         private Color color1 = Color.White;
         private Color color2 = Color.FromArgb(180, 180, 180);
         private Color color3 = Color.FromArgb(120, 120, 120);
+        //Current doc path
+        private string docPath = "";
 
         public Form()
         {
@@ -142,7 +145,70 @@ namespace QuickNotes3
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            string path = docPath;
+
+            //if no path: prompt save as
+            if (path.Equals(""))
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
+                saveFileDialog.Title = "Save As";
+                //Dialog: Save file
+                DialogResult res = saveFileDialog.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    //set path for file
+                    path = saveFileDialog.FileName;
+                }
+                else
+                {
+                    //if no save, reload and stop
+                    Reload();
+                    return;
+                }
+            }
+
+            //file path validation: must end with .txt
+            string extension = path.Substring(path.Length - 4);
+            if (!extension.Equals(".txt"))
+            {
+                MessageBox.Show("Error: Must save as a .txt file!");
+                Reload();
+                return;
+            }
+
+            //save to file
+            File.WriteAllText(path, Doc.Text);
+
+            //Reload doc
             Reload();
+        }
+
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+            //open file dialog
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text Files (*.txt)|*.txt";
+            openFileDialog.Title = "Load File";
+            //load from file
+            DialogResult res = openFileDialog.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                //load to docPath
+                docPath = openFileDialog.FileName;
+                //display doc name
+                DocPath.Text = docPath.Substring(docPath.LastIndexOf('\\') + 1);
+
+                //load to doc
+                Doc.Text = File.ReadAllText(openFileDialog.FileName);
+                //reload
+                Reload();
+            }
+            else
+            {
+                //stop
+                return;
+            }
         }
     }
 }
