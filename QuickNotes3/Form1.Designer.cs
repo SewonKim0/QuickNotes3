@@ -84,6 +84,8 @@
             // 
             // DocPath
             // 
+            this.DocPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DocPath.AutoEllipsis = true;
             this.DocPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DocPath.ForeColor = System.Drawing.Color.White;
@@ -91,6 +93,7 @@
             this.DocPath.Name = "DocPath";
             this.DocPath.Size = new System.Drawing.Size(223, 16);
             this.DocPath.TabIndex = 3;
+            this.DocPath.Click += new System.EventHandler(this.DocPath_Click);
             // 
             // Form
             // 
@@ -104,6 +107,7 @@
             this.Controls.Add(this.Doc);
             this.Name = "Form";
             this.Text = "QuickNotes3";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form_Load);
             this.ResumeLayout(false);
 

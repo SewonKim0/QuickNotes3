@@ -23,12 +23,15 @@ namespace QuickNotes3
         public Form()
         {
             InitializeComponent();
+            //Delete button?
         }
 
         private void Form_Load(object sender, EventArgs e)
         {
             //closing: save to data
             this.FormClosing += SetData;
+            //closing: save document
+            this.FormClosing += SaveDoc;
             //doc position change: set new color
             Doc.SelectionChanged += SetColor;
 
@@ -44,6 +47,26 @@ namespace QuickNotes3
                 int.Parse(data[2]),
                 int.Parse(data[3])
             );
+        }
+
+        private void SaveDoc(object sender, EventArgs e)
+        {
+            //if unnamed, dont save
+            if (DocPath.Text.Equals(""))
+            {
+                return;
+            }
+
+            //save to current path
+            try
+            {
+                File.WriteAllText(docPath, Doc.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: FILE SAVING FAILED");
+                return;
+            }
         }
 
         private void SetData(object sender, EventArgs e)
@@ -178,7 +201,14 @@ namespace QuickNotes3
             }
 
             //save to file
-            File.WriteAllText(path, Doc.Text);
+            try
+            {
+                File.WriteAllText(path, Doc.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: FILE SAVING FAILED");
+            }
             //set docPath
             docPath = path;
             //set doc name display
@@ -213,6 +243,11 @@ namespace QuickNotes3
                 //stop
                 return;
             }
+        }
+
+        private void DocPath_Click(object sender, EventArgs e)
+        {
+            //
         }
     }
 }
