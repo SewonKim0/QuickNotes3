@@ -249,5 +249,36 @@ namespace QuickNotes3
         {
             //
         }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            //get file path to delete
+            OpenFileDialog deleteFileDialog = new OpenFileDialog();
+            deleteFileDialog.Filter = "Text Files (*.txt)|*.txt";
+            deleteFileDialog.Title = "Delete File";
+
+            string deletePath = "";
+
+            //if result is ok, set file path
+            if (deleteFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                deletePath = deleteFileDialog.FileName;
+            }
+            else
+            {
+                return;
+            }
+
+            //if file path == current path: clear (doc, docPath, DocPath)
+            if (deletePath.Equals(docPath))
+            {
+                Doc.Text = "";
+                docPath = "";
+                DocPath.Text = "";
+            }
+
+            //delete
+            File.Delete(deletePath);
+        }
     }
 }

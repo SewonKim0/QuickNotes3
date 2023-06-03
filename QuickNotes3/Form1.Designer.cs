@@ -32,6 +32,7 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.LoadButton = new System.Windows.Forms.Button();
             this.DocPath = new System.Windows.Forms.Label();
+            this.DeleteButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Doc
@@ -57,9 +58,9 @@
             this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveButton.ForeColor = System.Drawing.Color.White;
-            this.SaveButton.Location = new System.Drawing.Point(307, 0);
+            this.SaveButton.Location = new System.Drawing.Point(329, 0);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(77, 23);
+            this.SaveButton.Size = new System.Drawing.Size(55, 23);
             this.SaveButton.TabIndex = 1;
             this.SaveButton.TabStop = false;
             this.SaveButton.Text = "Save";
@@ -73,9 +74,9 @@
             this.LoadButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LoadButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoadButton.ForeColor = System.Drawing.Color.White;
-            this.LoadButton.Location = new System.Drawing.Point(229, 0);
+            this.LoadButton.Location = new System.Drawing.Point(275, 0);
             this.LoadButton.Name = "LoadButton";
-            this.LoadButton.Size = new System.Drawing.Size(80, 23);
+            this.LoadButton.Size = new System.Drawing.Size(54, 23);
             this.LoadButton.TabIndex = 2;
             this.LoadButton.TabStop = false;
             this.LoadButton.Text = "Load";
@@ -91,9 +92,25 @@
             this.DocPath.ForeColor = System.Drawing.Color.White;
             this.DocPath.Location = new System.Drawing.Point(0, 3);
             this.DocPath.Name = "DocPath";
-            this.DocPath.Size = new System.Drawing.Size(223, 16);
+            this.DocPath.Size = new System.Drawing.Size(205, 16);
             this.DocPath.TabIndex = 3;
             this.DocPath.Click += new System.EventHandler(this.DocPath_Click);
+            // 
+            // DeleteButton
+            // 
+            this.DeleteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DeleteButton.BackColor = System.Drawing.Color.Black;
+            this.DeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DeleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DeleteButton.ForeColor = System.Drawing.Color.White;
+            this.DeleteButton.Location = new System.Drawing.Point(211, 0);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(64, 23);
+            this.DeleteButton.TabIndex = 4;
+            this.DeleteButton.TabStop = false;
+            this.DeleteButton.Text = "Delete";
+            this.DeleteButton.UseVisualStyleBackColor = false;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // Form
             // 
@@ -101,6 +118,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(385, 260);
+            this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.DocPath);
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.SaveButton);
@@ -119,6 +137,7 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.Label DocPath;
+        private System.Windows.Forms.Button DeleteButton;
     }
 }
 
