@@ -50,6 +50,7 @@
             this.Doc.TabIndex = 0;
             this.Doc.TabStop = false;
             this.Doc.Text = "";
+            this.Doc.TextChanged += new System.EventHandler(this.Doc_TextChanged);
             // 
             // SaveButton
             // 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace QuickNotes3
 {
@@ -23,7 +24,6 @@ namespace QuickNotes3
         public Form()
         {
             InitializeComponent();
-            //Delete button?
         }
 
         private void Form_Load(object sender, EventArgs e)
@@ -34,6 +34,8 @@ namespace QuickNotes3
             this.FormClosing += SaveDoc;
             //doc position change: set new color
             Doc.SelectionChanged += SetColor;
+            //doc link click: go to link
+            Doc.LinkClicked += Doc_LinkClicked;
 
             //get from data: read file
             string[] data = File.ReadAllText("data.txt").Split(' ');
@@ -279,6 +281,16 @@ namespace QuickNotes3
 
             //delete
             File.Delete(deletePath);
+        }
+
+        private void Doc_TextChanged(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void Doc_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
         }
     }
 }
