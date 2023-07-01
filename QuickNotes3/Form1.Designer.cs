@@ -42,7 +42,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Doc.BackColor = System.Drawing.Color.Black;
             this.Doc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Doc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Doc.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Doc.ForeColor = System.Drawing.Color.White;
             this.Doc.Location = new System.Drawing.Point(0, 22);
             this.Doc.Name = "Doc";
