@@ -9,17 +9,25 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace QuickNotes3
 {
     public partial class Form : System.Windows.Forms.Form
     {
-        //Doc text colors
+        // Doc text colors
         private Color color1 = Color.White;
         private Color color2 = Color.FromArgb(180, 180, 180);
         private Color color3 = Color.FromArgb(120, 120, 120);
         //Current doc path
         private string docPath = "";
+
+        // Doc scroll down control
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+        private const int EM_SCROLL = 0x00B5;
+        private const int SB_LINEUP = 0;
+        private const int SB_LINEDOWN = 1;
 
         public Form()
         {
@@ -128,9 +136,24 @@ namespace QuickNotes3
                 }
             }
 
-            //scroll to caret by selectionIndex
+            // scroll to caret by selectionIndex
             Doc.SelectionStart = selectionIndex;
             Doc.ScrollToCaret();
+
+            // get number of visible/total lines
+            int numVisibleLines = Doc.ClientSize.Height / Doc.Font.Height;
+            int numTotalLines = Doc.GetLineFromCharIndex(Doc.Text.Length - 1);
+            // get current line index
+            int currLine = Doc.GetLineFromCharIndex(Doc.SelectionStart);
+
+            // if not bottom: scroll up halfway
+            if (currLine < numTotalLines - numVisibleLines)
+            {
+                for (int x = 1; x <= (numVisibleLines / 2); x++)
+                {
+                    SendMessage(Doc.Handle, EM_SCROLL, (IntPtr)SB_LINEUP, IntPtr.Zero);
+                }
+            }
         }
 
         private void SetColor(object sender, EventArgs e)
