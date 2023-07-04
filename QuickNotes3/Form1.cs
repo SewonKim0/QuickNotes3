@@ -256,27 +256,31 @@ namespace QuickNotes3
 
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            //open file dialog
+            // open file dialog
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Text Files (*.txt)|*.txt";
             openFileDialog.Title = "Load File";
-            //load from file
+            // load from file
             DialogResult res = openFileDialog.ShowDialog();
             if (res == DialogResult.OK)
             {
-                //load to docPath
+                // load to docPath
                 docPath = openFileDialog.FileName;
-                //display doc name
+                // display doc name
                 DocPath.Text = docPath.Substring(docPath.LastIndexOf('\\') + 1);
 
-                //load to doc
+                // load to doc
                 Doc.Text = File.ReadAllText(openFileDialog.FileName);
-                //reload
+                // reload
                 Reload();
+
+                // select first index
+                Doc.Select();
+                Doc.SelectionStart = 0;
             }
             else
             {
-                //stop
+                // stop
                 return;
             }
         }
