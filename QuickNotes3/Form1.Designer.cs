@@ -33,6 +33,10 @@
             this.LoadButton = new System.Windows.Forms.Button();
             this.DocPath = new System.Windows.Forms.Label();
             this.DeleteButton = new System.Windows.Forms.Button();
+            this.FindButton = new System.Windows.Forms.Button();
+            this.FindInput = new System.Windows.Forms.TextBox();
+            this.FindUpButton = new System.Windows.Forms.Button();
+            this.FindDownButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Doc
@@ -93,7 +97,7 @@
             this.DocPath.ForeColor = System.Drawing.Color.White;
             this.DocPath.Location = new System.Drawing.Point(0, 3);
             this.DocPath.Name = "DocPath";
-            this.DocPath.Size = new System.Drawing.Size(205, 16);
+            this.DocPath.Size = new System.Drawing.Size(160, 16);
             this.DocPath.TabIndex = 3;
             this.DocPath.Click += new System.EventHandler(this.DocPath_Click);
             // 
@@ -113,12 +117,74 @@
             this.DeleteButton.UseVisualStyleBackColor = false;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
+            // FindButton
+            // 
+            this.FindButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FindButton.BackColor = System.Drawing.Color.Black;
+            this.FindButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FindButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FindButton.ForeColor = System.Drawing.Color.White;
+            this.FindButton.Location = new System.Drawing.Point(163, 0);
+            this.FindButton.Name = "FindButton";
+            this.FindButton.Size = new System.Drawing.Size(48, 23);
+            this.FindButton.TabIndex = 5;
+            this.FindButton.TabStop = false;
+            this.FindButton.Text = "Find";
+            this.FindButton.UseVisualStyleBackColor = false;
+            this.FindButton.Click += new System.EventHandler(this.FindButton_Click);
+            // 
+            // FindInput
+            // 
+            this.FindInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FindInput.BackColor = System.Drawing.Color.Black;
+            this.FindInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FindInput.ForeColor = System.Drawing.Color.White;
+            this.FindInput.Location = new System.Drawing.Point(0, 0);
+            this.FindInput.Name = "FindInput";
+            this.FindInput.Size = new System.Drawing.Size(140, 24);
+            this.FindInput.TabIndex = 6;
+            // 
+            // FindUpButton
+            // 
+            this.FindUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FindUpButton.BackColor = System.Drawing.Color.Black;
+            this.FindUpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FindUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FindUpButton.ForeColor = System.Drawing.Color.White;
+            this.FindUpButton.Location = new System.Drawing.Point(141, 1);
+            this.FindUpButton.Name = "FindUpButton";
+            this.FindUpButton.Size = new System.Drawing.Size(21, 10);
+            this.FindUpButton.TabIndex = 8;
+            this.FindUpButton.TabStop = false;
+            this.FindUpButton.UseVisualStyleBackColor = false;
+            this.FindUpButton.Click += new System.EventHandler(this.FindUpButton_Click);
+            // 
+            // FindDownButton
+            // 
+            this.FindDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FindDownButton.BackColor = System.Drawing.Color.Black;
+            this.FindDownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FindDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FindDownButton.ForeColor = System.Drawing.Color.White;
+            this.FindDownButton.Location = new System.Drawing.Point(141, 12);
+            this.FindDownButton.Name = "FindDownButton";
+            this.FindDownButton.Size = new System.Drawing.Size(21, 10);
+            this.FindDownButton.TabIndex = 9;
+            this.FindDownButton.TabStop = false;
+            this.FindDownButton.UseVisualStyleBackColor = false;
+            this.FindDownButton.Click += new System.EventHandler(this.FindDownButton_Click);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(385, 260);
+            this.Controls.Add(this.FindDownButton);
+            this.Controls.Add(this.FindUpButton);
+            this.Controls.Add(this.FindInput);
+            this.Controls.Add(this.FindButton);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.DocPath);
             this.Controls.Add(this.LoadButton);
@@ -129,6 +195,7 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Form_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -139,6 +206,10 @@
         private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.Label DocPath;
         private System.Windows.Forms.Button DeleteButton;
+        private System.Windows.Forms.Button FindButton;
+        private System.Windows.Forms.TextBox FindInput;
+        private System.Windows.Forms.Button FindUpButton;
+        private System.Windows.Forms.Button FindDownButton;
     }
 }
 
