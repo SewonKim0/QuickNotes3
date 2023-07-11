@@ -6,7 +6,8 @@ Simplify academic workload and make your notes more readable with a simple, yet 
 In terminal, run the following commands:
 
     git clone https://github.com/SewonKim0/QuickNotes3.git
-    ./QuickNotes3/QuickNotes3/bin/Debug/QuickNotes3
+    cd QuickNotes3/QuickNotes3/bin/Debug
+    ./QuickNotes3
 
 ### Usage
 **Coloring & Indentation**
