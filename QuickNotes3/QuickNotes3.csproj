@@ -93,6 +93,7 @@
     <Content Include="Images\dialog.png" />
     <Content Include="Images\form-find.png" />
     <Content Include="Images\form.png" />
+    <Content Include="Images\indentation-color.png" />
     <Content Include="Images\quicknotes3-icon.ico" />
     <Content Include="quicknotes3-icon.ico" />
   </ItemGroup>
