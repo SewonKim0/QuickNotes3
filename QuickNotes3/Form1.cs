@@ -17,9 +17,9 @@ namespace QuickNotes3
     public partial class Form : System.Windows.Forms.Form
     {
         // Doc text colors
-        private Color color1 = Color.White;
-        private Color color2 = Color.FromArgb(190, 190, 190);
-        private Color color3 = Color.FromArgb(140, 140, 140);
+        private Color color1 { get; } = Color.White;
+        private Color color2 { get; } = Color.FromArgb(190, 190, 190);
+        private Color color3 { get; } = Color.FromArgb(140, 140, 140);
         // Current doc path
         private string docPath = "";
 
@@ -93,7 +93,7 @@ namespace QuickNotes3
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERROR: FILE SAVING FAILED");
+                MessageBox.Show("ERROR: FILE SAVING FAILED\n" + ex.Message);
                 return;
             }
         }
@@ -263,7 +263,7 @@ namespace QuickNotes3
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERROR: FILE SAVING FAILED");
+                MessageBox.Show("ERROR: FILE SAVING FAILED\n" + ex.Message);
             }
             //set docPath
             docPath = path;
@@ -361,6 +361,8 @@ namespace QuickNotes3
                 FindInput.Visible = true;
                 FindUpButton.Visible = true;
                 FindDownButton.Visible = true;
+
+                FindInput.Select();
             }
             // if visible: hide and reset find data
             else
