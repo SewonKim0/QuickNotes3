@@ -30,6 +30,9 @@ namespace QuickNotes3
         // Find: Curr Keyword
         private string findKeyword = "";
 
+        // Sections: Sections Data
+        private List<Tuple<string, int>> sectionsData = new List<Tuple<string, int>>();
+
         // Doc scroll down control
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
@@ -343,7 +346,8 @@ namespace QuickNotes3
 
         private void Doc_TextChanged(object sender, EventArgs e)
         {
-            //
+            // close Sections combobox
+            Sections.Visible = false;
         }
 
         /* When link clicked in doc */
@@ -361,6 +365,7 @@ namespace QuickNotes3
                 FindInput.Visible = true;
                 FindUpButton.Visible = true;
                 FindDownButton.Visible = true;
+                Sections.Visible = false;
 
                 FindInput.Select();
             }
@@ -518,6 +523,79 @@ namespace QuickNotes3
                 // go down
                 FindDownButton_Click(null, null);
                 e.Handled = true;
+            }
+        }
+
+        /* Section Button Click: Toggle Sections Visibility */
+        private void SectionButton_Click(object sender, EventArgs e)
+        {
+            // if not visible: show
+            if (Sections.Visible == false)
+            {
+                Sections.Visible = true;
+                FindInput.Visible = false;
+                FindUpButton.Visible = false;
+                FindDownButton.Visible = false;
+
+                // clear sections data
+                sectionsData.Clear();
+                // clear Sections combobox
+                Sections.Text = "";
+                Sections.Items.Clear();
+
+                // store sections data
+                string[] lines = Doc.Lines;
+                int lineIndex = 0;
+                foreach (string line in lines)
+                {
+                    // if no tab: add to sections
+                    if (line.Length > 0 && line[0] != '\t')
+                    {
+                        sectionsData.Add(new Tuple<string, int>(line, lineIndex));
+                    }
+
+                    // update lineIndex
+                    lineIndex += line.Length + 1;
+                }
+
+                // show sections data
+                foreach (Tuple<string, int> section in sectionsData)
+                {
+                    Sections.Items.Add(section.Item1);
+                }
+            }
+            // if visible: hide
+            else
+            {
+                Sections.Visible = false;
+            }
+        }
+
+        /* Sections Select Section: Go To Section */
+        private void Sections_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // get index
+            string sectionText = Sections.SelectedItem.ToString();
+            int selectionIndex = -1;
+            foreach (Tuple<string, int> section in sectionsData)
+            {
+                if (section.Item1.Equals(sectionText))
+                {
+                    selectionIndex = section.Item2;
+                    break;
+                }
+            }
+
+            // go to index
+            if (selectionIndex == -1)
+            {
+                return;
+            }
+            else
+            {
+                Doc.Select();
+                Doc.SelectionStart = selectionIndex;
+                Doc.SelectionLength = 0;
             }
         }
     }
