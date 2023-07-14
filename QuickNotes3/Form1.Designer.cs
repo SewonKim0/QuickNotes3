@@ -37,6 +37,8 @@
             this.FindInput = new System.Windows.Forms.TextBox();
             this.FindUpButton = new System.Windows.Forms.Button();
             this.FindDownButton = new System.Windows.Forms.Button();
+            this.Sections = new System.Windows.Forms.ComboBox();
+            this.SectionButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Doc
@@ -142,7 +144,7 @@
             this.FindInput.ForeColor = System.Drawing.Color.White;
             this.FindInput.Location = new System.Drawing.Point(0, 0);
             this.FindInput.Name = "FindInput";
-            this.FindInput.Size = new System.Drawing.Size(140, 24);
+            this.FindInput.Size = new System.Drawing.Size(73, 24);
             this.FindInput.TabIndex = 6;
             // 
             // FindUpButton
@@ -152,7 +154,7 @@
             this.FindUpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FindUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindUpButton.ForeColor = System.Drawing.Color.White;
-            this.FindUpButton.Location = new System.Drawing.Point(141, 1);
+            this.FindUpButton.Location = new System.Drawing.Point(73, 1);
             this.FindUpButton.Name = "FindUpButton";
             this.FindUpButton.Size = new System.Drawing.Size(21, 10);
             this.FindUpButton.TabIndex = 8;
@@ -167,7 +169,7 @@
             this.FindDownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FindDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindDownButton.ForeColor = System.Drawing.Color.White;
-            this.FindDownButton.Location = new System.Drawing.Point(141, 12);
+            this.FindDownButton.Location = new System.Drawing.Point(73, 12);
             this.FindDownButton.Name = "FindDownButton";
             this.FindDownButton.Size = new System.Drawing.Size(21, 10);
             this.FindDownButton.TabIndex = 9;
@@ -175,12 +177,45 @@
             this.FindDownButton.UseVisualStyleBackColor = false;
             this.FindDownButton.Click += new System.EventHandler(this.FindDownButton_Click);
             // 
+            // Sections
+            // 
+            this.Sections.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Sections.BackColor = System.Drawing.Color.Black;
+            this.Sections.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Sections.ForeColor = System.Drawing.Color.White;
+            this.Sections.FormattingEnabled = true;
+            this.Sections.Location = new System.Drawing.Point(0, 0);
+            this.Sections.Name = "Sections";
+            this.Sections.Size = new System.Drawing.Size(94, 24);
+            this.Sections.TabIndex = 11;
+            this.Sections.Visible = false;
+            this.Sections.SelectedIndexChanged += new System.EventHandler(this.Sections_SelectedIndexChanged);
+            // 
+            // SectionButton
+            // 
+            this.SectionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SectionButton.BackColor = System.Drawing.Color.Black;
+            this.SectionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SectionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SectionButton.ForeColor = System.Drawing.Color.White;
+            this.SectionButton.Location = new System.Drawing.Point(94, 0);
+            this.SectionButton.Name = "SectionButton";
+            this.SectionButton.Size = new System.Drawing.Size(72, 23);
+            this.SectionButton.TabIndex = 12;
+            this.SectionButton.TabStop = false;
+            this.SectionButton.Text = "Section";
+            this.SectionButton.UseVisualStyleBackColor = false;
+            this.SectionButton.Click += new System.EventHandler(this.SectionButton_Click);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(385, 260);
+            this.Controls.Add(this.SectionButton);
+            this.Controls.Add(this.Sections);
             this.Controls.Add(this.FindDownButton);
             this.Controls.Add(this.FindUpButton);
             this.Controls.Add(this.FindInput);
@@ -210,6 +245,8 @@
         private System.Windows.Forms.TextBox FindInput;
         private System.Windows.Forms.Button FindUpButton;
         private System.Windows.Forms.Button FindDownButton;
+        private System.Windows.Forms.ComboBox Sections;
+        private System.Windows.Forms.Button SectionButton;
     }
 }
 
