@@ -69,15 +69,27 @@ namespace QuickNotes3
 
             // get from data: read file
             string[] data = File.ReadAllText("data.txt").Split(' ');
+
+            // position: out of bounds check
+            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+            int sizeX = int.Parse(data[2]);
+            int sizeY = int.Parse(data[3]);
+
+            int locationX = Math.Min(int.Parse(data[0]), screenWidth - sizeX);
+            int locationY = Math.Min(int.Parse(data[1]), screenHeight - sizeY);
+            locationX = Math.Max(locationX, 0);
+            locationY = Math.Max(locationY, 0);
+
             // set position by data
             this.Location = new Point(
-                int.Parse(data[0]), 
-                int.Parse(data[1])
+                locationX,
+                locationY
             );
             // set size by data
             this.Size = new Size(
-                int.Parse(data[2]),
-                int.Parse(data[3])
+                sizeX,
+                sizeY
             );
         }
 
