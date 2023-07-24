@@ -575,6 +575,7 @@ namespace QuickNotes3
                 {
                     Sections.Items.Add(section.Item1);
                 }
+                Sections.DroppedDown = true;
             }
             // if visible: hide
             else
@@ -605,9 +606,37 @@ namespace QuickNotes3
             }
             else
             {
+                // go to selection location
                 Doc.Select();
                 Doc.SelectionStart = selectionIndex;
                 Doc.SelectionLength = 0;
+                Doc.ScrollToCaret();
+
+                // get number of visible/total lines
+                int numVisibleLines = Doc.ClientSize.Height / Doc.Font.Height;
+                int numTotalLines = Doc.GetLineFromCharIndex(Doc.Text.Length - 1) + 1;
+                // get current line index
+                int currLine = Doc.GetLineFromCharIndex(Doc.SelectionStart);
+
+                // if not bottom: scroll up halfway
+                if (currLine < numTotalLines - numVisibleLines)
+                {
+                    int scrollUp = numVisibleLines / 2;
+                    for (int x = 1; x <= scrollUp; x++)
+                    {
+                        SendMessage(Doc.Handle, EM_SCROLL, (IntPtr)SB_LINEUP, IntPtr.Zero);
+                    }
+                }
+                // if bottom: scroll up by (remaining - (visible / 2))
+                else
+                {
+                    int remainingLines = numTotalLines - currLine;
+                    int scrollUp = remainingLines - (numVisibleLines / 2);
+                    for (int x = 1; x <= scrollUp; x++)
+                    {
+                        SendMessage(Doc.Handle, EM_SCROLL, (IntPtr)SB_LINEUP, IntPtr.Zero);
+                    }
+                }
             }
         }
     }
