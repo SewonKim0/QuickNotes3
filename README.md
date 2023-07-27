@@ -4,7 +4,8 @@ Simplify academic workload and make your notes more readable with a simple, yet 
 ![Form Image](QuickNotes3/Images/form.png)
 
 ### Install Quicknotes 3
-In terminal, run the following commands:
+In terminal, navigate to the directory in which you would like to install.  
+Then, run the following commands:  
 
     git clone https://github.com/SewonKim0/QuickNotes3.git
     cd QuickNotes3/QuickNotes3/bin/Debug
