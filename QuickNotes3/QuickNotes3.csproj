@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\quicknotes3-icon.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Icons\quicknotes3-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
@@ -90,11 +90,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data.txt" />
-    <Content Include="Images\dialog.png" />
-    <Content Include="Images\form-find.png" />
-    <Content Include="Images\form.png" />
-    <Content Include="Images\indentation-color.png" />
-    <Content Include="Images\quicknotes3-icon.ico" />
+    <Content Include="Images\Markdown\dialog.png" />
+    <Content Include="Images\Markdown\form-find.png" />
+    <Content Include="Images\Markdown\form.png" />
+    <Content Include="Images\Markdown\indentation-color.png" />
+    <Content Include="Images\Icons\quicknotes3-icon.ico" />
     <Content Include="quicknotes3-icon.ico" />
   </ItemGroup>
   <ItemGroup />
