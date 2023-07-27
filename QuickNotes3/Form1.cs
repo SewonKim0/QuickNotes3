@@ -239,6 +239,9 @@ namespace QuickNotes3
         /* Save Button: Full saving procedure */
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            // take focus off of Doc
+            SaveButton.Focus();
+
             string path = docPath;
 
             //if no path: prompt save as
