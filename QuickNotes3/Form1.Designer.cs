@@ -146,6 +146,7 @@
             this.FindInput.Name = "FindInput";
             this.FindInput.Size = new System.Drawing.Size(73, 24);
             this.FindInput.TabIndex = 6;
+            this.FindInput.TabStop = false;
             // 
             // FindUpButton
             // 
@@ -189,6 +190,7 @@
             this.Sections.Name = "Sections";
             this.Sections.Size = new System.Drawing.Size(94, 24);
             this.Sections.TabIndex = 11;
+            this.Sections.TabStop = false;
             this.Sections.Visible = false;
             this.Sections.SelectedIndexChanged += new System.EventHandler(this.Sections_SelectedIndexChanged);
             // 
