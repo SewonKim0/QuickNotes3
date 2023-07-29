@@ -371,28 +371,55 @@ namespace QuickNotes3
             Process.Start(e.LinkText);
         }
 
+        /* Open Find */
+        private void OpenFind()
+        {
+            FindInput.Visible = true;
+            FindUpButton.Visible = true;
+            FindDownButton.Visible = true;
+            FindInput.Select();
+
+            CloseSections();
+        }
+
+        /* Close Find */
+        private void CloseFind()
+        {
+            FindInput.Visible = false;
+            FindInput.Text = "";
+            FindUpButton.Visible = false;
+            FindDownButton.Visible = false;
+            findKeyword = "";
+            findIndices.Clear();
+            findIndex = 0;
+        }
+
+        /* Open Sections */
+        private void OpenSections()
+        {
+            Sections.Visible = true;
+
+            CloseFind();
+        }
+
+        /* Close Sections */
+        private void CloseSections()
+        {
+            Sections.Visible = false;
+        }
+
         /* Toggle visibility of find interface */
         private void FindButton_Click(object sender, EventArgs e)
         {
             // if not visible: show
             if (FindInput.Visible == false)
             {
-                FindInput.Visible = true;
-                FindUpButton.Visible = true;
-                FindDownButton.Visible = true;
-                Sections.Visible = false;
-
-                FindInput.Select();
+                OpenFind();
             }
             // if visible: hide and reset find data
             else
             {
-                FindInput.Visible = false;
-                FindUpButton.Visible = false;
-                FindDownButton.Visible = false;
-                findKeyword = "";
-                findIndices.Clear();
-                findIndex = 0;
+                CloseFind();
             }
         }
 
@@ -501,13 +528,7 @@ namespace QuickNotes3
             // ctrl + f: find in doc
             if (e.Control && char.ToLower((char)e.KeyCode) == 'f')
             {
-                // make find interface visible
-                FindInput.Visible = true;
-                FindDownButton.Visible = true;
-                FindUpButton.Visible = true;
-
-                // focus to FindInput
-                FindInput.Select();
+                OpenFind();
             }
 
             // up arrow: move up in find
@@ -539,6 +560,21 @@ namespace QuickNotes3
                 FindDownButton_Click(null, null);
                 e.Handled = true;
             }
+
+            // enter: move down in find
+            if (e.KeyCode == Keys.Return)
+            {
+                // validate find mode
+                string selected = Doc.Text.Substring(Doc.SelectionStart, Doc.SelectionLength);
+                if (!(selected.Equals(findKeyword, StringComparison.OrdinalIgnoreCase)) || findKeyword.Equals(""))
+                {
+                    return;
+                }
+
+                // go down
+                FindDownButton_Click(null, null);
+                e.Handled = true;
+            }
         }
 
         /* Section Button Click: Toggle Sections Visibility */
@@ -547,10 +583,7 @@ namespace QuickNotes3
             // if not visible: show
             if (Sections.Visible == false)
             {
-                Sections.Visible = true;
-                FindInput.Visible = false;
-                FindUpButton.Visible = false;
-                FindDownButton.Visible = false;
+                OpenSections();
 
                 // clear sections data
                 sectionsData.Clear();
@@ -583,7 +616,7 @@ namespace QuickNotes3
             // if visible: hide
             else
             {
-                Sections.Visible = false;
+                CloseSections();
             }
         }
 
