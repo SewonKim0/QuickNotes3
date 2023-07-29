@@ -14,14 +14,16 @@ using System.Threading;
 
 namespace QuickNotes3
 {
-    public partial class Form : System.Windows.Forms.Form
+    public partial class MainForm : System.Windows.Forms.Form
     {
         // Doc text colors
         private Color color1 { get; } = Color.White;
         private Color color2 { get; } = Color.FromArgb(190, 190, 190);
         private Color color3 { get; } = Color.FromArgb(140, 140, 140);
-        // Current doc path
+
+        // Paths
         private string docPath = "";
+        private string DATA_PATH = "data.txt";
 
         // Find: Start Indices
         private List<int> findIndices = new List<int>();
@@ -40,7 +42,7 @@ namespace QuickNotes3
         private const int SB_LINEUP = 0;
         private const int SB_LINEDOWN = 1;
 
-        public Form()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -68,7 +70,7 @@ namespace QuickNotes3
             FindInput.KeyPress += FindInput_KeyPress;
 
             // get from data: read file
-            string[] data = File.ReadAllText("data.txt").Split(' ');
+            string[] data = File.ReadAllText(DATA_PATH).Split(' ');
 
             // position: out of bounds check
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
@@ -123,7 +125,7 @@ namespace QuickNotes3
             int sizeY = this.Size.Height;
 
             //save to file
-            File.WriteAllText("data.txt", 
+            File.WriteAllText(DATA_PATH, 
                 posX + " " + posY + " " + sizeX + " " + sizeY    
             );
         }

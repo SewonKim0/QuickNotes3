@@ -1,6 +1,6 @@
 ﻿namespace QuickNotes3
 {
-    partial class Form
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -39,6 +39,7 @@
             this.FindDownButton = new System.Windows.Forms.Button();
             this.Sections = new System.Windows.Forms.ComboBox();
             this.SectionButton = new System.Windows.Forms.Button();
+            this.pictureButton1 = new QuickNotes3.PictureButton();
             this.SuspendLayout();
             // 
             // Doc
@@ -210,12 +211,21 @@
             this.SectionButton.UseVisualStyleBackColor = false;
             this.SectionButton.Click += new System.EventHandler(this.SectionButton_Click);
             // 
-            // Form
+            // pictureButton1
+            // 
+            this.pictureButton1.BackColor = System.Drawing.Color.Black;
+            this.pictureButton1.Location = new System.Drawing.Point(129, 94);
+            this.pictureButton1.Name = "pictureButton1";
+            this.pictureButton1.Size = new System.Drawing.Size(81, 67);
+            this.pictureButton1.TabIndex = 13;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(385, 260);
+            this.Controls.Add(this.pictureButton1);
             this.Controls.Add(this.SectionButton);
             this.Controls.Add(this.Sections);
             this.Controls.Add(this.FindDownButton);
@@ -227,7 +237,7 @@
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.Doc);
-            this.Name = "Form";
+            this.Name = "MainForm";
             this.Text = "QuickNotes3";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Form_Load);
@@ -249,6 +259,7 @@
         private System.Windows.Forms.Button FindDownButton;
         private System.Windows.Forms.ComboBox Sections;
         private System.Windows.Forms.Button SectionButton;
+        private PictureButton pictureButton1;
     }
 }
 
