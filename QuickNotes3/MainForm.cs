@@ -11,19 +11,25 @@ using System.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace QuickNotes3
 {
     public partial class MainForm : System.Windows.Forms.Form
     {
         // Doc text colors
-        private Color color1 { get; } = Color.White;
-        private Color color2 { get; } = Color.FromArgb(190, 190, 190);
-        private Color color3 { get; } = Color.FromArgb(140, 140, 140);
+        private Color COLOR1 { get; } = Color.White;
+        private Color COLOR2 { get; } = Color.FromArgb(190, 190, 190);
+        private Color COLOR3 { get; } = Color.FromArgb(140, 140, 140);
 
         // Paths
-        private string docPath = "";
-        private string DATA_PATH = "data.txt";
+        private string docPath { get; set; } = "";
+        private string DATA_PATH { get; } = "data.txt";
+        private string BACKUP_PATH { get; } = "backup.txt";
+
+        private string FIND_ICON_PATH { get; } = "Images/Icons/find.png";
+        private string SECTIONS_ICON_PATH { get; } = "Images/Icons/sections.png";
+        private string BACKUP_ICON_PATH { get; } = "Images/Icons/backup.png";
 
         // Find: Start Indices
         private List<int> findIndices = new List<int>();
@@ -42,6 +48,9 @@ namespace QuickNotes3
         private const int SB_LINEUP = 0;
         private const int SB_LINEDOWN = 1;
 
+        // Backups Data
+        private Dictionary<string, string> backupData { get; set; }
+
         public MainForm()
         {
             InitializeComponent();
@@ -49,15 +58,27 @@ namespace QuickNotes3
 
         private void Form_Load(object sender, EventArgs e)
         {
-            // hide find-related controls
-            FindInput.Visible = false;
-            FindUpButton.Visible = false;
-            FindDownButton.Visible = false;
+            // setup icon buttons
+            FindButton.SetImage(Image.FromFile(FIND_ICON_PATH));
+            FindButton.ButtonClick += FindButton_ButtonClick;
 
-            // closing: save to data
-            this.FormClosing += SetData;
-            // closing: save document
-            this.FormClosing += SaveDoc;
+            SectionButton.SetImage(Image.FromFile(SECTIONS_ICON_PATH));
+            SectionButton.ButtonClick += SectionButton_ButtonClick;
+
+            BackupButton.SetImage(Image.FromFile(BACKUP_ICON_PATH));
+            BackupButton.ButtonClick += BackupButton_ButtonClick;
+
+            // position hidden controls
+            FindInput.Location = new Point(FindInput.Location.X, 0);
+            FindUpButton.Location = new Point(FindUpButton.Location.X, 0);
+            FindDownButton.Location = new Point(FindDownButton.Location.X, 12);
+
+            Sections.Location = new Point(Sections.Location.X, 0);
+
+            Backups.Location = new Point(Backups.Location.X, 0);
+
+            // closing: save document & data
+            this.FormClosing += MainForm_Closing;
 
             // doc position change: set new color
             Doc.SelectionChanged += SetColor;
@@ -93,41 +114,73 @@ namespace QuickNotes3
                 sizeX,
                 sizeY
             );
+
+            // get backup data
+            string backupJson = File.ReadAllText(BACKUP_PATH);
+            if (backupJson.Equals(""))
+            {
+                backupData = new Dictionary<string, string>();
+            }
+            else
+            {
+                backupData = JsonConvert.DeserializeObject<Dictionary<string, string>>(backupJson);
+            }
+            // setup Backups list
+            foreach (KeyValuePair<string, string> entry in backupData)
+            {
+                Backups.Items.Add(entry.Key);
+            }
         }
 
-        private void SaveDoc(object sender, EventArgs e)
+        private void Backup(string backupPath, string backupText)
         {
-            //if unnamed, dont save
-            if (DocPath.Text.Equals(""))
+            string path = backupPath;
+            if (path.Equals(""))
             {
                 return;
             }
 
-            //save to current path
-            try
-            {
-                File.WriteAllText(docPath, Doc.Text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ERROR: FILE SAVING FAILED\n" + ex.Message);
-                return;
-            }
+            // get file name
+            string fileName = path.Substring(path.LastIndexOf("\\") + 1);
+            // get directory name
+            path = path.Substring(0, path.LastIndexOf("\\"));
+            string directoryName = path.Substring(path.LastIndexOf("\\") + 1);
+
+            // save to BackupData
+            string formattedPath = directoryName + "\\" + fileName;
+            backupData[formattedPath] = backupText;
         }
 
-        private void SetData(object sender, EventArgs e)
+        private void MainForm_Closing(object sender, EventArgs e)
         {
-            //get position
+            // save to current path
+            if (!(docPath.Equals("")))
+            {
+                try
+                {
+                    File.WriteAllText(docPath, Doc.Text);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("ERROR: FILE SAVING FAILED\n" + ex.Message);
+                    return;
+                }
+            }
+
+            // get position
             int posX = this.Location.X;
             int posY = this.Location.Y;
-            //get size
+            // get size
             int sizeX = this.Size.Width;
             int sizeY = this.Size.Height;
-
-            //save to file
-            File.WriteAllText(DATA_PATH, 
-                posX + " " + posY + " " + sizeX + " " + sizeY    
+            // save to file
+            File.WriteAllText(DATA_PATH,
+                posX + " " + posY + " " + sizeX + " " + sizeY
             );
+
+            // save backupData as json
+            string backupJson = JsonConvert.SerializeObject(backupData);
+            File.WriteAllText(BACKUP_PATH, backupJson);
         }
 
         private void Reload()
@@ -148,17 +201,17 @@ namespace QuickNotes3
                 // 2 tabs: color3
                 if (line.Length >= 2 && line[0] == '\t' && line[1] == '\t')
                 {
-                    Doc.SelectionColor = color3;
+                    Doc.SelectionColor = COLOR3;
                 }
                 // 1 tab: color2
                 else if (line.Length >= 1 && line[0] == '\t')
                 {
-                    Doc.SelectionColor = color2;
+                    Doc.SelectionColor = COLOR2;
                 }
                 // default: color1
                 else
                 {
-                    Doc.SelectionColor = color1;
+                    Doc.SelectionColor = COLOR1;
                 }
 
                 // add to doc
@@ -224,17 +277,17 @@ namespace QuickNotes3
             //2 tabs: color3
             if (line.Length >= 2 && line[0] == '\t' && line[1] == '\t')
             {
-                Doc.SelectionColor = color3;
+                Doc.SelectionColor = COLOR3;
             }
             //1 tab: color2
             else if (line.Length >= 1 && line[0] == '\t')
             {
-                Doc.SelectionColor = color2;
+                Doc.SelectionColor = COLOR2;
             }
             //default: color1
             else
             {
-                Doc.SelectionColor = color1;
+                Doc.SelectionColor = COLOR1;
             }
         }
 
@@ -246,28 +299,28 @@ namespace QuickNotes3
 
             string path = docPath;
 
-            //if no path: prompt save as
+            // if no path: prompt save as
             if (path.Equals(""))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
                 saveFileDialog.Title = "Save As";
-                //Dialog: Save file
+                // Dialog: Save file
                 DialogResult res = saveFileDialog.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    //set path for file
+                    // set path for file
                     path = saveFileDialog.FileName;
                 }
                 else
                 {
-                    //if no save, reload and stop
+                    // if no save, reload and stop
                     Reload();
                     return;
                 }
             }
 
-            //file path validation: must end with .txt
+            // file path validation: must end with .txt
             string extension = path.Substring(path.Length - 4);
             if (!extension.Equals(".txt"))
             {
@@ -276,7 +329,7 @@ namespace QuickNotes3
                 return;
             }
 
-            //save to file
+            // save to file
             try
             {
                 File.WriteAllText(path, Doc.Text);
@@ -285,13 +338,17 @@ namespace QuickNotes3
             {
                 MessageBox.Show("ERROR: FILE SAVING FAILED\n" + ex.Message);
             }
-            //set docPath
-            docPath = path;
-            //set doc name display
-            DocPath.Text = path.Substring(path.LastIndexOf('\\') + 1);
 
-            //Reload doc
+            // set docPath
+            docPath = path;
+            // set doc name display
+            DocPath.Text = path.Substring(path.LastIndexOf('\\') + 1, path.LastIndexOf('.') - path.LastIndexOf('\\') - 1);
+            this.Text = DocPath.Text;
+
+            // Reload doc
             Reload();
+            // Backup doc
+            Backup(docPath, Doc.Text);
         }
 
         private void LoadButton_Click(object sender, EventArgs e)
@@ -307,7 +364,8 @@ namespace QuickNotes3
                 // load to docPath
                 docPath = openFileDialog.FileName;
                 // display doc name
-                DocPath.Text = docPath.Substring(docPath.LastIndexOf('\\') + 1);
+                DocPath.Text = docPath.Substring(docPath.LastIndexOf('\\') + 1, docPath.LastIndexOf('.') - docPath.LastIndexOf('\\') - 1);
+                this.Text = DocPath.Text;
 
                 // load to doc
                 Doc.Text = File.ReadAllText(openFileDialog.FileName);
@@ -323,11 +381,6 @@ namespace QuickNotes3
                 // stop
                 return;
             }
-        }
-
-        private void DocPath_Click(object sender, EventArgs e)
-        {
-            //
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
@@ -349,12 +402,23 @@ namespace QuickNotes3
                 return;
             }
 
+            // backup file
+            if (deletePath.Equals(docPath))
+            {
+                Backup(docPath, Doc.Text);
+            }
+            else
+            {
+                Backup(deletePath, File.ReadAllText(deletePath));
+            }
+
             // if file path == current path: clear (doc, docPath, DocPath)
             if (deletePath.Equals(docPath))
             {
                 Doc.Text = "";
                 docPath = "";
                 DocPath.Text = "";
+                this.Text = "Quicknotes3";
             }
 
             // delete
@@ -381,7 +445,9 @@ namespace QuickNotes3
             FindDownButton.Visible = true;
             FindInput.Select();
 
+            // close others
             CloseSections();
+            CloseBackups();
         }
 
         /* Close Find */
@@ -401,7 +467,37 @@ namespace QuickNotes3
         {
             Sections.Visible = true;
 
+            // clear sections data
+            sectionsData.Clear();
+            // clear Sections combobox
+            Sections.Text = "";
+            Sections.Items.Clear();
+
+            // store sections data
+            string[] lines = Doc.Lines;
+            int lineIndex = 0;
+            foreach (string line in lines)
+            {
+                // if no tab: add to sections
+                if (line.Length > 0 && line[0] != '\t')
+                {
+                    sectionsData.Add(new Tuple<string, int>(line, lineIndex));
+                }
+
+                // update lineIndex
+                lineIndex += line.Length + 1;
+            }
+
+            // show sections data
+            foreach (Tuple<string, int> section in sectionsData)
+            {
+                Sections.Items.Add(section.Item1);
+            }
+            Sections.DroppedDown = true;
+
+            // close others
             CloseFind();
+            CloseBackups();
         }
 
         /* Close Sections */
@@ -410,8 +506,26 @@ namespace QuickNotes3
             Sections.Visible = false;
         }
 
+        /* Open Backups */
+        private void OpenBackups()
+        {
+            // show backups
+            Backups.Visible = true;
+            Backups.DroppedDown = true;
+
+            // close others
+            CloseSections();
+            CloseFind();
+        }
+
+        /* Close Backups */
+        private void CloseBackups()
+        {
+            Backups.Visible = false;
+        }
+
         /* Toggle visibility of find interface */
-        private void FindButton_Click(object sender, EventArgs e)
+        private void FindButton_ButtonClick(object sender, EventArgs e)
         {
             // if not visible: show
             if (FindInput.Visible == false)
@@ -422,6 +536,36 @@ namespace QuickNotes3
             else
             {
                 CloseFind();
+            }
+        }
+
+        /* Section Button Click: Toggle Sections Visibility */
+        private void SectionButton_ButtonClick(object sender, EventArgs e)
+        {
+            // if not visible: show
+            if (Sections.Visible == false)
+            {
+                OpenSections();
+            }
+            // if visible: hide
+            else
+            {
+                CloseSections();
+            }
+        }
+
+        /* Backup Button: Click */
+        private void BackupButton_ButtonClick(object sender, EventArgs e)
+        {
+            // if not visible: show
+            if (Backups.Visible == false)
+            {
+                OpenBackups();
+            }
+            // if visible: hide
+            else
+            {
+                CloseBackups();
             }
         }
 
@@ -517,7 +661,13 @@ namespace QuickNotes3
             // ctrl + s: save doc
             if (e.Control && char.ToLower((char)e.KeyCode) == 's')
             {
+                int selectionStart = Doc.SelectionStart;
+
                 SaveButton_Click(null, null);
+
+                Doc.SelectionStart = selectionStart;
+                Doc.SelectionLength = 0;
+                Doc.Select();
             }
 
             // ctrl + r: reload doc
@@ -579,49 +729,6 @@ namespace QuickNotes3
             }
         }
 
-        /* Section Button Click: Toggle Sections Visibility */
-        private void SectionButton_Click(object sender, EventArgs e)
-        {
-            // if not visible: show
-            if (Sections.Visible == false)
-            {
-                OpenSections();
-
-                // clear sections data
-                sectionsData.Clear();
-                // clear Sections combobox
-                Sections.Text = "";
-                Sections.Items.Clear();
-
-                // store sections data
-                string[] lines = Doc.Lines;
-                int lineIndex = 0;
-                foreach (string line in lines)
-                {
-                    // if no tab: add to sections
-                    if (line.Length > 0 && line[0] != '\t')
-                    {
-                        sectionsData.Add(new Tuple<string, int>(line, lineIndex));
-                    }
-
-                    // update lineIndex
-                    lineIndex += line.Length + 1;
-                }
-
-                // show sections data
-                foreach (Tuple<string, int> section in sectionsData)
-                {
-                    Sections.Items.Add(section.Item1);
-                }
-                Sections.DroppedDown = true;
-            }
-            // if visible: hide
-            else
-            {
-                CloseSections();
-            }
-        }
-
         /* Sections Select Section: Go To Section */
         private void Sections_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -676,6 +783,17 @@ namespace QuickNotes3
                     }
                 }
             }
+        }
+
+        /* Backups Index Selected: Load Backup To Doc */
+        private void Backups_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(backupData.ContainsKey(Backups.Text)))
+            {
+                MessageBox.Show("Error: Backup path does not exist");
+            }
+            Doc.Text = backupData[Backups.Text];
+            Reload();
         }
     }
 }
