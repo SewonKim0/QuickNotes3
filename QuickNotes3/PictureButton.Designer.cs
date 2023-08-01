@@ -34,22 +34,23 @@
             // 
             // MainButton
             // 
-            this.MainButton.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MainButton.Location = new System.Drawing.Point(0, 0);
+            this.MainButton.BackColor = System.Drawing.Color.Black;
+            this.MainButton.Location = new System.Drawing.Point(1, 1);
             this.MainButton.Name = "MainButton";
-            this.MainButton.Size = new System.Drawing.Size(80, 65);
+            this.MainButton.Size = new System.Drawing.Size(21, 21);
+            this.MainButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.MainButton.TabIndex = 0;
             this.MainButton.TabStop = false;
-            this.MainButton.Click += new System.EventHandler(this.MainButton_Click);
             // 
             // PictureButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.Color.DarkGray;
             this.Controls.Add(this.MainButton);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "PictureButton";
-            this.Size = new System.Drawing.Size(81, 67);
+            this.Size = new System.Drawing.Size(23, 23);
             this.Load += new System.EventHandler(this.PictureButton_Load);
             ((System.ComponentModel.ISupportInitialize)(this.MainButton)).EndInit();
             this.ResumeLayout(false);

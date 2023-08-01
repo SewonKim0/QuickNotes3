@@ -33,13 +33,14 @@
             this.LoadButton = new System.Windows.Forms.Button();
             this.DocPath = new System.Windows.Forms.Label();
             this.DeleteButton = new System.Windows.Forms.Button();
-            this.FindButton = new System.Windows.Forms.Button();
             this.FindInput = new System.Windows.Forms.TextBox();
             this.FindUpButton = new System.Windows.Forms.Button();
             this.FindDownButton = new System.Windows.Forms.Button();
             this.Sections = new System.Windows.Forms.ComboBox();
-            this.SectionButton = new System.Windows.Forms.Button();
-            this.pictureButton1 = new QuickNotes3.PictureButton();
+            this.Backups = new System.Windows.Forms.ComboBox();
+            this.BackupButton = new QuickNotes3.PictureButton();
+            this.SectionButton = new QuickNotes3.PictureButton();
+            this.FindButton = new QuickNotes3.PictureButton();
             this.SuspendLayout();
             // 
             // Doc
@@ -100,9 +101,8 @@
             this.DocPath.ForeColor = System.Drawing.Color.White;
             this.DocPath.Location = new System.Drawing.Point(0, 3);
             this.DocPath.Name = "DocPath";
-            this.DocPath.Size = new System.Drawing.Size(160, 16);
+            this.DocPath.Size = new System.Drawing.Size(136, 16);
             this.DocPath.TabIndex = 3;
-            this.DocPath.Click += new System.EventHandler(this.DocPath_Click);
             // 
             // DeleteButton
             // 
@@ -120,22 +120,6 @@
             this.DeleteButton.UseVisualStyleBackColor = false;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
-            // FindButton
-            // 
-            this.FindButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.FindButton.BackColor = System.Drawing.Color.Black;
-            this.FindButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FindButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FindButton.ForeColor = System.Drawing.Color.White;
-            this.FindButton.Location = new System.Drawing.Point(163, 0);
-            this.FindButton.Name = "FindButton";
-            this.FindButton.Size = new System.Drawing.Size(48, 23);
-            this.FindButton.TabIndex = 5;
-            this.FindButton.TabStop = false;
-            this.FindButton.Text = "Find";
-            this.FindButton.UseVisualStyleBackColor = false;
-            this.FindButton.Click += new System.EventHandler(this.FindButton_Click);
-            // 
             // FindInput
             // 
             this.FindInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -143,11 +127,12 @@
             this.FindInput.BackColor = System.Drawing.Color.Black;
             this.FindInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindInput.ForeColor = System.Drawing.Color.White;
-            this.FindInput.Location = new System.Drawing.Point(0, 0);
+            this.FindInput.Location = new System.Drawing.Point(0, 33);
             this.FindInput.Name = "FindInput";
-            this.FindInput.Size = new System.Drawing.Size(73, 24);
+            this.FindInput.Size = new System.Drawing.Size(121, 24);
             this.FindInput.TabIndex = 6;
             this.FindInput.TabStop = false;
+            this.FindInput.Visible = false;
             // 
             // FindUpButton
             // 
@@ -156,12 +141,13 @@
             this.FindUpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FindUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindUpButton.ForeColor = System.Drawing.Color.White;
-            this.FindUpButton.Location = new System.Drawing.Point(73, 1);
+            this.FindUpButton.Location = new System.Drawing.Point(121, 34);
             this.FindUpButton.Name = "FindUpButton";
             this.FindUpButton.Size = new System.Drawing.Size(21, 10);
             this.FindUpButton.TabIndex = 8;
             this.FindUpButton.TabStop = false;
             this.FindUpButton.UseVisualStyleBackColor = false;
+            this.FindUpButton.Visible = false;
             this.FindUpButton.Click += new System.EventHandler(this.FindUpButton_Click);
             // 
             // FindDownButton
@@ -171,12 +157,13 @@
             this.FindDownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FindDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindDownButton.ForeColor = System.Drawing.Color.White;
-            this.FindDownButton.Location = new System.Drawing.Point(73, 12);
+            this.FindDownButton.Location = new System.Drawing.Point(121, 45);
             this.FindDownButton.Name = "FindDownButton";
             this.FindDownButton.Size = new System.Drawing.Size(21, 10);
             this.FindDownButton.TabIndex = 9;
             this.FindDownButton.TabStop = false;
             this.FindDownButton.UseVisualStyleBackColor = false;
+            this.FindDownButton.Visible = false;
             this.FindDownButton.Click += new System.EventHandler(this.FindDownButton_Click);
             // 
             // Sections
@@ -187,37 +174,62 @@
             this.Sections.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Sections.ForeColor = System.Drawing.Color.White;
             this.Sections.FormattingEnabled = true;
-            this.Sections.Location = new System.Drawing.Point(0, 0);
+            this.Sections.Location = new System.Drawing.Point(0, 64);
             this.Sections.Name = "Sections";
-            this.Sections.Size = new System.Drawing.Size(94, 24);
+            this.Sections.Size = new System.Drawing.Size(142, 24);
             this.Sections.TabIndex = 11;
             this.Sections.TabStop = false;
             this.Sections.Visible = false;
             this.Sections.SelectedIndexChanged += new System.EventHandler(this.Sections_SelectedIndexChanged);
             // 
+            // Backups
+            // 
+            this.Backups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Backups.BackColor = System.Drawing.Color.Black;
+            this.Backups.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Backups.ForeColor = System.Drawing.Color.White;
+            this.Backups.FormattingEnabled = true;
+            this.Backups.Location = new System.Drawing.Point(0, 94);
+            this.Backups.Name = "Backups";
+            this.Backups.Size = new System.Drawing.Size(142, 24);
+            this.Backups.TabIndex = 16;
+            this.Backups.TabStop = false;
+            this.Backups.Visible = false;
+            this.Backups.SelectedIndexChanged += new System.EventHandler(this.Backups_SelectedIndexChanged);
+            // 
+            // BackupButton
+            // 
+            this.BackupButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BackupButton.BackColor = System.Drawing.Color.DarkGray;
+            this.BackupButton.ForeColor = System.Drawing.Color.White;
+            this.BackupButton.Location = new System.Drawing.Point(142, 0);
+            this.BackupButton.Name = "BackupButton";
+            this.BackupButton.Size = new System.Drawing.Size(23, 23);
+            this.BackupButton.TabIndex = 15;
+            this.BackupButton.TabStop = false;
+            // 
             // SectionButton
             // 
             this.SectionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.SectionButton.BackColor = System.Drawing.Color.Black;
-            this.SectionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SectionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SectionButton.BackColor = System.Drawing.Color.DarkGray;
             this.SectionButton.ForeColor = System.Drawing.Color.White;
-            this.SectionButton.Location = new System.Drawing.Point(94, 0);
+            this.SectionButton.Location = new System.Drawing.Point(165, 0);
             this.SectionButton.Name = "SectionButton";
-            this.SectionButton.Size = new System.Drawing.Size(72, 23);
-            this.SectionButton.TabIndex = 12;
+            this.SectionButton.Size = new System.Drawing.Size(23, 23);
+            this.SectionButton.TabIndex = 14;
             this.SectionButton.TabStop = false;
-            this.SectionButton.Text = "Section";
-            this.SectionButton.UseVisualStyleBackColor = false;
-            this.SectionButton.Click += new System.EventHandler(this.SectionButton_Click);
             // 
-            // pictureButton1
+            // FindButton
             // 
-            this.pictureButton1.BackColor = System.Drawing.Color.Black;
-            this.pictureButton1.Location = new System.Drawing.Point(129, 94);
-            this.pictureButton1.Name = "pictureButton1";
-            this.pictureButton1.Size = new System.Drawing.Size(81, 67);
-            this.pictureButton1.TabIndex = 13;
+            this.FindButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FindButton.BackColor = System.Drawing.Color.DarkGray;
+            this.FindButton.ForeColor = System.Drawing.Color.White;
+            this.FindButton.Location = new System.Drawing.Point(188, 0);
+            this.FindButton.Name = "FindButton";
+            this.FindButton.Size = new System.Drawing.Size(23, 23);
+            this.FindButton.TabIndex = 13;
+            this.FindButton.TabStop = false;
             // 
             // MainForm
             // 
@@ -225,13 +237,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(385, 260);
-            this.Controls.Add(this.pictureButton1);
+            this.Controls.Add(this.Backups);
+            this.Controls.Add(this.BackupButton);
             this.Controls.Add(this.SectionButton);
+            this.Controls.Add(this.FindButton);
             this.Controls.Add(this.Sections);
             this.Controls.Add(this.FindDownButton);
             this.Controls.Add(this.FindUpButton);
             this.Controls.Add(this.FindInput);
-            this.Controls.Add(this.FindButton);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.DocPath);
             this.Controls.Add(this.LoadButton);
@@ -253,13 +266,14 @@
         private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.Label DocPath;
         private System.Windows.Forms.Button DeleteButton;
-        private System.Windows.Forms.Button FindButton;
         private System.Windows.Forms.TextBox FindInput;
         private System.Windows.Forms.Button FindUpButton;
         private System.Windows.Forms.Button FindDownButton;
         private System.Windows.Forms.ComboBox Sections;
-        private System.Windows.Forms.Button SectionButton;
-        private PictureButton pictureButton1;
+        private PictureButton FindButton;
+        private PictureButton SectionButton;
+        private PictureButton BackupButton;
+        private System.Windows.Forms.ComboBox Backups;
     }
 }
 
