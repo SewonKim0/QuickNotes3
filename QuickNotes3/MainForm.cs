@@ -116,6 +116,9 @@ namespace QuickNotes3
             );
 
             // get backup data
+            if (!(File.Exists(BACKUP_PATH))) {
+                File.WriteAllText(BACKUP_PATH, "");
+            }
             string backupJson = File.ReadAllText(BACKUP_PATH);
             if (backupJson.Equals(""))
             {
@@ -151,7 +154,7 @@ namespace QuickNotes3
             backupData[formattedPath] = backupText;
         }
 
-        private void MainForm_Closing(object sender, EventArgs e)
+        private void MainForm_Closing(object sender, FormClosingEventArgs e)
         {
             // save to current path
             if (!(docPath.Equals("")))
@@ -163,6 +166,7 @@ namespace QuickNotes3
                 catch (Exception ex)
                 {
                     MessageBox.Show("ERROR: FILE SAVING FAILED\n" + ex.Message);
+                    e.Cancel = true;
                     return;
                 }
             }
@@ -173,14 +177,42 @@ namespace QuickNotes3
             // get size
             int sizeX = this.Size.Width;
             int sizeY = this.Size.Height;
+
+            // if out of bounds: reset dimensions
+            if (posX < 0 || posY < 0)
+            {
+                posX = 0;
+                posY = 0;
+                sizeX = 450;
+                sizeY = 300;
+            }
+
             // save to file
-            File.WriteAllText(DATA_PATH,
-                posX + " " + posY + " " + sizeX + " " + sizeY
-            );
+            try
+            {
+                File.WriteAllText(DATA_PATH,
+                    posX + " " + posY + " " + sizeX + " " + sizeY
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: POS DATA SAVING FAILED\n" + ex.Message);
+                e.Cancel = true;
+                return;
+            }
 
             // save backupData as json
             string backupJson = JsonConvert.SerializeObject(backupData);
-            File.WriteAllText(BACKUP_PATH, backupJson);
+            try
+            {
+                File.WriteAllText(BACKUP_PATH, backupJson);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: BACKUP SAVING FAILED\n" + ex.Message);
+                e.Cancel = true;
+                return;
+            }
         }
 
         private void Reload()
