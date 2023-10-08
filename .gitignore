@@ -17,6 +17,8 @@
 mono_crash.*
 
 # Build results
+backup.txt
+[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
@@ -25,6 +27,7 @@ x86/
 [Ww][Ii][Nn]32/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
+[Bb]in/
 bld/
 [Oo]bj/
 [Oo]ut/
