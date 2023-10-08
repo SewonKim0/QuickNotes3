@@ -198,7 +198,7 @@ namespace QuickNotes3
             {
                 MessageBox.Show("ERROR: POS DATA SAVING FAILED\n" + ex.Message);
                 e.Cancel = true;
-                return;
+                return; //
             }
 
             // save backupData as json
