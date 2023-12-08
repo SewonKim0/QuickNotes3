@@ -389,10 +389,25 @@ namespace QuickNotes3
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Text Files (*.txt)|*.txt";
             openFileDialog.Title = "Load File";
+
             // load from file
             DialogResult res = openFileDialog.ShowDialog();
             if (res == DialogResult.OK)
             {
+                // save to current path
+                if (!(docPath.Equals("")))
+                {
+                    try
+                    {
+                        File.WriteAllText(docPath, Doc.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("ERROR: FILE SAVING FAILED\n" + ex.Message);
+                        return;
+                    }
+                }
+
                 // load to docPath
                 docPath = openFileDialog.FileName;
                 // display doc name
