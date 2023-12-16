@@ -542,6 +542,26 @@ namespace QuickNotes3
             }
             Sections.DroppedDown = true;
 
+            // get closest line in sectionsData and select it
+            int currLine = Doc.GetLineFromCharIndex(Doc.SelectionStart);
+            int closestIndex = 0;
+            for (int sectionsIndex = 0; sectionsIndex < sectionsData.Count; sectionsIndex++)
+            {
+                int sectionIndex = sectionsData[sectionsIndex].Item2;
+                int sectionLine = Doc.GetLineFromCharIndex(sectionIndex);
+                if (sectionLine <= currLine)
+                {
+                    closestIndex = sectionsIndex;
+                }
+            }
+            // Tag = false indicates that selection event should not be triggered
+            Sections.Tag = false;
+            if (Doc.Lines.Length != 0)
+            {
+                Sections.SelectedIndex = closestIndex;
+            }
+            Sections.Tag = true;
+
             // close others
             CloseFind();
             CloseBackups();
@@ -779,6 +799,11 @@ namespace QuickNotes3
         /* Sections Select Section: Go To Section */
         private void Sections_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if ((bool)Sections.Tag == false)
+            {
+                return;
+            }
+
             // get index
             string sectionText = Sections.SelectedItem.ToString();
             int selectionIndex = -1;
