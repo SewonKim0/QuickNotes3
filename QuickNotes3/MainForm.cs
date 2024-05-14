@@ -21,6 +21,7 @@ namespace QuickNotes3
         private Color COLOR1 { get; } = Color.White;
         private Color COLOR2 { get; } = Color.FromArgb(190, 190, 190);
         private Color COLOR3 { get; } = Color.FromArgb(140, 140, 140);
+        private Color BACK_COLOR { get; } = Color.FromArgb(40, 40, 40);
 
         // Paths
         private string docPath { get; set; } = "";
@@ -240,10 +241,11 @@ namespace QuickNotes3
                 {
                     Doc.SelectionColor = COLOR2;
                 }
-                // default: color1
+                // default: color1 & highlight
                 else
                 {
                     Doc.SelectionColor = COLOR1;
+                    Doc.SelectionBackColor = BACK_COLOR;
                 }
 
                 // add to doc
